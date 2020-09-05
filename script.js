@@ -9,6 +9,7 @@ function setup() {
 // the season number the episode number the episode 's medium-sized image
 // the episode 's summary text 
 function makePageForEpisodes(episodeList) {
+
   const rootElem = document.getElementById("root");
   let container = document.querySelector(".container");
   rootElem.textContent = `Got ${episodeList.length} episode(s)`;
@@ -34,23 +35,33 @@ function makePageForEpisodes(episodeList) {
     episodeContainer.style.border = "5px solid pink";
     episodeContainer.className = "epiContainer";
     rootElem.className = "rootContainer";
+    let select = document.getElementById("episodeSelector");
+    for (let i = 0; i < allEpisodes.length; i++) {
+      let option = document.createElement("option");
+      let text = document.createTextNode(`${allEpisodes[i].season} ${allEpisodes[i].number} - ${allEpisodes[i].name}`);
+      option.setAttribute("value", allEpisodes[i].name);
+      option.appendChild(text);
+      select.insertBefore(option, select.lastChild);
+
+    }
   })
-  //  for loop
-  // episodeList.forEach(function (episode) {
+
+
+
 
   //   let OptionSelector = document.getElementById("episodeSelection")
-  OptionSelector= document.createElement('option');
+  // OptionSelector= document.createElement('option');
 
 
-// create new option element
+  // create new option element
 
- 
 
-    // let episodeSelector = document.getElementById("episodeSelector").selectedIndex;
-    // let episodeOption = document.getElementsByi("episodeOption")[episodeSelector].value);
-  
 
-  
+  // let episodeSelector = document.getElementById("episodeSelector").selectedIndex;
+  // let episodeOption = document.getElementsByi("episodeOption")[episodeSelector].value);
+
+
+
 
   // S02E07
 }
@@ -69,4 +80,19 @@ searchBox.addEventListener("keyup", function (event) {
   rootElem.textContent = "";
   makePageForEpisodes(newArray);
 });
+let selectMenu = document.getElementById("episodeSelector");
+selectMenu.addEventListener("change", function (event) {
+  if (event.target.value === "default") {
+    rootElem.textContent = "";
+    makePageForEpisodes(allEpisodes)
+  } else {
+    rootElem.textContent = "";
+    let filterEpisode = allEpisodes.filter(function (item) {
+      return (item.name === event.target.value);
+
+    })
+    makePageForEpisodes(filterEpisode);
+  }
+
+})
 window.onload = setup;
