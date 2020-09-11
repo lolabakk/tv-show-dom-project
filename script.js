@@ -44,7 +44,7 @@ function makePageForEpisodes(episodeList) {
       select.insertBefore(option, select.lastChild);
 
     }
-  })
+  });
 
 
 
