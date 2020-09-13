@@ -1,18 +1,38 @@
 //You can edit ALL of the code here
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  console.log(allEpisodes);
-  makePageForEpisodes(allEpisodes);
+let getEpisodes = "";
+
+function fetchEpisode() {
+  fetch(`https://api.tvmaze.com/shows/582/episodes`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      getEpisodes = data;
+      makePageForEpisodes(getEpisodes);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
 
 }
+
 // the episode 's name
 // the season number the episode number the episode 's medium-sized image
 // the episode 's summary text 
+let searchBox = document.getElementById("searchBox");
+let episodeCount = document.createElement("span");
+
 function makePageForEpisodes(episodeList) {
 
   const rootElem = document.getElementById("root");
   let container = document.querySelector(".container");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  let episodeSearch = document.querySelector(".episodeSearch")
+
+
+  episodeCount.textContent = `Got ${episodeList.length} episode(s)`;
+  episodeCount.style.backgroundColor = "red";
+  episodeSearch.appendChild(episodeCount);
   episodeList.forEach(function (episode) {
     let episodeContainer = document.createElement("div");
     let episodeNumber = episode.number;
@@ -26,20 +46,22 @@ function makePageForEpisodes(episodeList) {
     headerEpisode.textContent = `${episode.name}-${episodeCode}`;
 
     episodeContainer.appendChild(headerEpisode);
-    // searchEpisode.innerHTML = 
-    imageEpisode.src = episode.image.medium;
+    if (episode.image != null) {
+      imageEpisode.src = episode.image.medium;
+    }
+
     episodeContainer.appendChild(imageEpisode);
-    episodeSummary.innerHTML = episode.summary;
+    episodeSummary.innerHTML = episode.summary || "no summary provided";
     episodeContainer.appendChild(episodeSummary);
     rootElem.appendChild(episodeContainer);
     episodeContainer.style.border = "5px solid pink";
     episodeContainer.className = "epiContainer";
     rootElem.className = "rootContainer";
     let select = document.getElementById("episodeSelector");
-    for (let i = 0; i < allEpisodes.length; i++) {
+    for (let i = 0; i < getEpisodes.length; i++) {
       let option = document.createElement("option");
-      let text = document.createTextNode(`${allEpisodes[i].season} ${allEpisodes[i].number} - ${allEpisodes[i].name}`);
-      option.setAttribute("value", allEpisodes[i].name);
+      let text = document.createTextNode(`${getEpisodes[i].season} ${getEpisodes[i].number} - ${getEpisodes[i].name}`);
+      option.setAttribute("value", getEpisodes[i].name);
       option.appendChild(text);
       select.insertBefore(option, select.lastChild);
 
@@ -47,30 +69,13 @@ function makePageForEpisodes(episodeList) {
   });
 
 
-
-
-  //   let OptionSelector = document.getElementById("episodeSelection")
-  // OptionSelector= document.createElement('option');
-
-
-  // create new option element
-
-
-
-  // let episodeSelector = document.getElementById("episodeSelector").selectedIndex;
-  // let episodeOption = document.getElementsByi("episodeOption")[episodeSelector].value);
-
-
-
-
-  // S02E07
 }
-let searchBox = document.getElementById("searchBox");
-const allEpisodes = getAllEpisodes();
+
+// const allEpisodes = getEpisodes();
 const rootElem = document.getElementById("root");
 searchBox.addEventListener("keyup", function (event) {
   searchBox = event.target.value.toLowerCase();
-  let newArray = allEpisodes.filter(function (item) {
+  let newArray = getEpisodes.filter(function (item) {
     return (
       item.name.toLowerCase().includes(searchBox) ||
       item.summary.toLowerCase().includes(searchBox)
@@ -84,10 +89,10 @@ let selectMenu = document.getElementById("episodeSelector");
 selectMenu.addEventListener("change", function (event) {
   if (event.target.value === "default") {
     rootElem.textContent = "";
-    makePageForEpisodes(allEpisodes)
+    makePageForEpisodes(getEpisodes)
   } else {
     rootElem.textContent = "";
-    let filterEpisode = allEpisodes.filter(function (item) {
+    let filterEpisode = getEpisodes.filter(function (item) {
       return (item.name === event.target.value);
 
     })
@@ -95,4 +100,5 @@ selectMenu.addEventListener("change", function (event) {
   }
 
 })
-window.onload = setup;
+// window.onload = setup;
+fetchEpisode();

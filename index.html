@@ -3,20 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | Omolola (lolabakk)</title>
+    <title>TV Show Project | Omolola lolabakk</title>
+    
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
-    <div class="container">
-      <input id="searchBox" type="text" />
+    <body class="bg-light">
+       <div class="container">
+         
+             <h1 class="headerBox">Omolola Series Episodes</h1>
+      <form class="episodeSearch" action="">Search all<input id="searchBox" type="text" /></form>
       <select id="episodeSelector">
-        <option class="episodeOption" value="default">Default</option>
+        <option class="episodeOption" value="default">Select Episodes</option>
       </select>
+
 
       <div id="root"></div>
     </div>
+    </div>
+    </div>
+      
+      
+    
+   
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
