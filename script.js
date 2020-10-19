@@ -2,7 +2,7 @@
 let getEpisodes = "";
 
 function fetchEpisode() {
-  fetch(`https://api.tvmaze.com/shows/582/episodes`)
+  fetch(`https://api.tvmaze.com/shows/82/episodes`)
     .then(function (response) {
       return response.json();
     })
@@ -13,8 +13,6 @@ function fetchEpisode() {
     .catch(function (error) {
       console.log(error);
     })
-
-
 }
 
 // the episode 's name
@@ -44,12 +42,10 @@ function makePageForEpisodes(episodeList) {
 
     // S02E07
     headerEpisode.textContent = `${episode.name}-${episodeCode}`;
-
     episodeContainer.appendChild(headerEpisode);
     if (episode.image != null) {
       imageEpisode.src = episode.image.medium;
     }
-
     episodeContainer.appendChild(imageEpisode);
     episodeSummary.innerHTML = episode.summary || "no summary provided";
     episodeContainer.appendChild(episodeSummary);
@@ -67,24 +63,27 @@ function makePageForEpisodes(episodeList) {
 
     }
   });
-
-
+  createShowList();
 }
 
-// const allEpisodes = getEpisodes();
 const rootElem = document.getElementById("root");
 searchBox.addEventListener("keyup", function (event) {
-  searchBox = event.target.value.toLowerCase();
+  let searchItem = event.target.value.toLowerCase();
   let newArray = getEpisodes.filter(function (item) {
+    console.log(item);
+    let name = item.name.toLowerCase();
+
+    let summary = item.summary.toLowerCase();
     return (
-      item.name.toLowerCase().includes(searchBox) ||
-      item.summary.toLowerCase().includes(searchBox)
+      name.includes(searchItem) ||
+      summary.includes(searchItem)
     );
   });
 
   rootElem.textContent = "";
   makePageForEpisodes(newArray);
 });
+
 let selectMenu = document.getElementById("episodeSelector");
 selectMenu.addEventListener("change", function (event) {
   if (event.target.value === "default") {
@@ -97,8 +96,22 @@ selectMenu.addEventListener("change", function (event) {
 
     })
     makePageForEpisodes(filterEpisode);
+
   }
 
+
 })
+
+function createShowList() {
+  let newShow = document.getElementById("showInterest");
+  let showList = getAllShows();
+  // console.log(showList);
+  showList.forEach((show) => {
+    let option = document.createElement('option');
+    option.textContent = show.name;
+    newShow.appendChild(option);
+  })
+}
+
 // window.onload = setup;
 fetchEpisode();

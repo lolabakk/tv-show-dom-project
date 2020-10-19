@@ -15,6 +15,7 @@ function makePageForEpisodes(episodeList) {
     const rootElem = document.getElementById("root");
     let container = document.querySelector(".container");
     let episodeCount = document.createElement("span");
+    let episodeSelection = document.createElement("se")
 
     episodeCount.textContent = `Got ${episodeList.length} episode(s)`;
     episodeCount.style.backgroundColor = "red";
