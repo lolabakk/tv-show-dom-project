@@ -7,34 +7,23 @@
     
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  </head>
-
-  <body>
-    <body class="bg-light">
-       <div class="container">
-         
-             <h1 class="headerBox">Omolola Series Episodes</h1>
-      <form class="episodeSearch" action="">Search all<input id="searchBox" type="text" /></form>
-      <select id="showInterest" class="interestedShow">
-      <option class= "episodeShow" value="default">Select Show</option>
-      </select>
-
-      <select id="episodeSelector">
-
-
-        <option class="episodeOption" value="default">Select Episodes</option>
-      </select>
-      
-
-
-      <div id="root"></div>
-    </div>
-    </div>
-    </div>
-      
-      
-    
-   
+  </head>  
+  <body class="bg-light">
+    <div id="root">
+      <h1 class="headerBox">Omolola Series Episodes</h1>
+      <div class="buttonCont">
+       <form class="episodeSearch" action="">Search all<input id="searchBox" type="text" /></form>
+       <select id="showInterest" class="interestedShow">
+           <option class= "episodeShow" value="default">Select Show</option>
+       </select>
+       <select id="episodeSelector">
+           <option class="episodeOption" value="default">Select Episodes</option>
+       </select>
+      </div>    
+      <div class="container">         
+      </div> 
+    </div>    
+       
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>

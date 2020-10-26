@@ -4,45 +4,80 @@
   box-sizing: border-box;
 }
 
+body{
+  background-color: #918c8d;
+}
+
+#searchBox:hover{
+  background-color:#b2c1cc;
+  cursor: pointer;
+margin-bottom: 2rem;
+ }
+
+ #showInterest:hover{
+   background-color: #a3b2b3;
+     cursor: pointer;
+     margin-bottom: 2rem;
+ }
+ #episodeSelector:hover{
+   background-color: #98adad;
+     cursor: pointer;
+     margin-bottom: 2rem;
+ }
+
+ .buttonCont{
+   display: flex;
+   justify-content: space-around;  
+   
+ }
+
+ .img{
+   opacity: 0.2;
+   padding: 1rem;
+   max-width: 100%;  
+ } 
+
+
 .rootContainer {
   margin-top: 33.3px;
 }
+
 h1 {
-  color: white;
-  text-align: center;
-  background: black;
+   text-align: center;
+  background:white;
+  margin-bottom: 3rem;
 }
 
 .epiContainer {
-  width: 30%;
+  width: 380px;
   margin-top: 40px;
-}
-.searchBox {
-  width: max-content;
-}
-
-div {
-  background-color: whitesmoke;
-  box-shadow: cornsilk, rgb(244, 244, 245);
-  margin-left: 20px;
-  align-items: center;
+  padding: 0.3rem;
+  margin-right: 1.8rem;
+   background-color:white
 }
 
-img {
-  max-width: 600px;
-  justify-content: space-between;
-}
 
-#root {
+  
+.container {
   color: rgb(6, 36, 46);
-  width: 100%;
+  width: 90%;
+  margin: auto;
   display: flex;
   text-align: center;
   font-size: 1rem;
   flex-wrap: wrap;
   align-items: stretch;
+  justify-content: center;
 }
 
-p {
-  color: black;
+p {  
+  text-align: justify;
 }
+
+/* #searchBox{
+
+}
+
+
+.container{
+  background-color: rgb(126, 165, 177); */

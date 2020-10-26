@@ -1,4 +1,6 @@
-//You can edit ALL of the code here
+
+
+ //You can edit ALL of the code here
 let getEpisodes = "";
 
 function fetchEpisode() {
@@ -15,9 +17,9 @@ function fetchEpisode() {
     })
 }
 
-// the episode 's name
-// the season number the episode number the episode 's medium-sized image
-// the episode 's summary text 
+// // the episode 's name
+// // the season number the episode number the episode 's medium-sized image
+// // the episode 's summary text 
 let searchBox = document.getElementById("searchBox");
 let episodeCount = document.createElement("span");
 
@@ -27,9 +29,8 @@ function makePageForEpisodes(episodeList) {
   let container = document.querySelector(".container");
   let episodeSearch = document.querySelector(".episodeSearch")
 
-
-  episodeCount.textContent = `Got ${episodeList.length} episode(s)`;
-  episodeCount.style.backgroundColor = "red";
+//LIST ALL EPISODES 
+  episodeCount.textContent = `Displaying ${episodeList.length}/ ${getEpisodes.length} episode(s)`;
   episodeSearch.appendChild(episodeCount);
   episodeList.forEach(function (episode) {
     let episodeContainer = document.createElement("div");
@@ -40,7 +41,7 @@ function makePageForEpisodes(episodeList) {
     let imageEpisode = document.createElement("img");
     let episodeSummary = document.createElement("p");
 
-    // S02E07
+//   
     headerEpisode.textContent = `${episode.name}-${episodeCode}`;
     episodeContainer.appendChild(headerEpisode);
     if (episode.image != null) {
@@ -49,10 +50,11 @@ function makePageForEpisodes(episodeList) {
     episodeContainer.appendChild(imageEpisode);
     episodeSummary.innerHTML = episode.summary || "no summary provided";
     episodeContainer.appendChild(episodeSummary);
-    rootElem.appendChild(episodeContainer);
-    episodeContainer.style.border = "5px solid pink";
+    container.appendChild(episodeContainer);
+    episodeContainer.style.border = "3.5px solid #300030";
     episodeContainer.className = "epiContainer";
     rootElem.className = "rootContainer";
+
     let select = document.getElementById("episodeSelector");
     for (let i = 0; i < getEpisodes.length; i++) {
       let option = document.createElement("option");
@@ -65,8 +67,7 @@ function makePageForEpisodes(episodeList) {
   });
   createShowList();
 }
-
-const rootElem = document.getElementById("root");
+ let container = document.querySelector(".container");
 searchBox.addEventListener("keyup", function (event) {
   let searchItem = event.target.value.toLowerCase();
   let newArray = getEpisodes.filter(function (item) {
@@ -80,38 +81,37 @@ searchBox.addEventListener("keyup", function (event) {
     );
   });
 
-  rootElem.textContent = "";
+  container.textContent = "";
   makePageForEpisodes(newArray);
 });
-
+//FILTER TO SELECT EPISODE 
 let selectMenu = document.getElementById("episodeSelector");
 selectMenu.addEventListener("change", function (event) {
   if (event.target.value === "default") {
-    rootElem.textContent = "";
+   container.textContent = "";
     makePageForEpisodes(getEpisodes)
   } else {
-    rootElem.textContent = "";
+    container.textContent = "";
     let filterEpisode = getEpisodes.filter(function (item) {
       return (item.name === event.target.value);
 
     })
-    makePageForEpisodes(filterEpisode);
-
+    makePageForEpisodes(filterEpisode);    
   }
-
-
 })
 
-function createShowList() {
+// LIST ALL THE SHOWS
+function createShowList() {  
   let newShow = document.getElementById("showInterest");
   let showList = getAllShows();
   // console.log(showList);
-  showList.forEach((show) => {
+  showList.sort((a, b)=> a.name.localeCompare(b.name)).forEach((show) => {
     let option = document.createElement('option');
     option.textContent = show.name;
     newShow.appendChild(option);
   })
 }
+
 
 // window.onload = setup;
 fetchEpisode();
