@@ -3,8 +3,8 @@
  //You can edit ALL of the code here
 let getEpisodes = "";
 
-function fetchEpisode() {
-  fetch(`https://api.tvmaze.com/shows/82/episodes`)
+function fetchEpisode(showId = 82) {
+  fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
     .then(function (response) {
       return response.json();
     })
@@ -28,6 +28,7 @@ function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   let container = document.querySelector(".container");
   let episodeSearch = document.querySelector(".episodeSearch")
+  container.textContent = "";
 
 //LIST ALL EPISODES 
   episodeCount.textContent = `Displaying ${episodeList.length}/ ${getEpisodes.length} episode(s)`;
@@ -55,15 +56,8 @@ function makePageForEpisodes(episodeList) {
     episodeContainer.className = "epiContainer";
     rootElem.className = "rootContainer";
 
-    let select = document.getElementById("episodeSelector");
-    for (let i = 0; i < getEpisodes.length; i++) {
-      let option = document.createElement("option");
-      let text = document.createTextNode(`${getEpisodes[i].season} ${getEpisodes[i].number} - ${getEpisodes[i].name}`);
-      option.setAttribute("value", getEpisodes[i].name);
-      option.appendChild(text);
-      select.insertBefore(option, select.lastChild);
-
-    }
+    
+    createEpisodesList()
   });
   createShowList();
 }
@@ -100,7 +94,22 @@ selectMenu.addEventListener("change", function (event) {
   }
 })
 
-// LIST ALL THE SHOWS
+//FUNCTION TO LIST OF EPISODE
+function createEpisodesList() {
+     let select = document.getElementById("episodeSelector");
+     select.textContent = "";
+    for (let i = 0; i < getEpisodes.length; i++) {
+      let option = document.createElement("option");
+      let text = document.createTextNode(`${getEpisodes[i].season} ${getEpisodes[i].number} - ${getEpisodes[i].name}`);
+      option.setAttribute("value", getEpisodes[i].name);
+      option.appendChild(text);
+      select.insertBefore(option, select.lastChild);
+
+    }
+
+}
+
+// LIST ALL THE SHOWS 
 function createShowList() {  
   let newShow = document.getElementById("showInterest");
   let showList = getAllShows();
@@ -108,10 +117,15 @@ function createShowList() {
   showList.sort((a, b)=> a.name.localeCompare(b.name)).forEach((show) => {
     let option = document.createElement('option');
     option.textContent = show.name;
+    option.value = show.id;
     newShow.appendChild(option);
   })
+  newShow.addEventListener("change", getShowEpisodes)
 }
-
+function getShowEpisodes(event) {
+      const id = event.target.value;
+      fetchEpisode(id);
+}
 
 // window.onload = setup;
 fetchEpisode();
